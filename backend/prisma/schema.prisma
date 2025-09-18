@@ -1,0 +1,77 @@
+﻿generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Navigation {
+  id             Int       @id @default(autoincrement())
+  title          String
+  slug           String    @unique
+  last_scraped_at DateTime?
+  categories     Category[]
+}
+
+model Category {
+  id             Int       @id @default(autoincrement())
+  navigation_id  Int
+  parent_id      Int?
+  title          String
+  slug           String
+  product_count  Int?
+  last_scraped_at DateTime?
+  navigation     Navigation @relation(fields: [navigation_id], references: [id])
+}
+
+model Product {
+  id             Int       @id @default(autoincrement())
+  source_id      String    @unique
+  title          String?
+  author         String?
+  price          Float?
+  currency       String?
+  image_url      String?
+  source_url     String    @unique
+  last_scraped_at DateTime?
+  detail         ProductDetail?
+  reviews        Review[]
+}
+
+model ProductDetail {
+  product_id    Int     @id
+  description   String?
+  specs         Json?
+  ratings_avg   Float?
+  reviews_count Int?
+  updated_at    DateTime @default(now())
+  product       Product @relation(fields: [product_id], references: [id])
+}
+
+model Review {
+  id         Int      @id @default(autoincrement())
+  productId  Int
+  author     String?
+  rating     Int?
+  text       String?
+  created_at DateTime @default(now())
+  product    Product  @relation(fields: [productId], references: [id])
+}
+
+model ScrapeJob {
+  id          Int      @id @default(autoincrement())
+  target_url  String?
+  target_type String?
+  status      String?
+  started_at  DateTime?
+  finished_at DateTime?
+  error_log   String?
+}
+
+model ViewHistory {
+  id         Int    @id @default(autoincrement())
+  session_id String
+  path_json  Json
+  created_at DateTime @default(now())
+}

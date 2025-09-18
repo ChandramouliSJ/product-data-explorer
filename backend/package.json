@@ -1,0 +1,38 @@
+{
+  "name": "product-data-explorer-backend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start:dev": "ts-node-dev --respawn --transpile-only src/main.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node dist/main.js",
+    "worker": "ts-node-dev --respawn --transpile-only worker.ts",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev --name init",
+    "prisma:seed": "ts-node prisma/seed.ts",
+    "install:playwright": "npx playwright install --with-deps",
+    "lint": "echo No linter configured"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.1.6",
+    "@nestjs/core": "^11.1.6",
+    "@nestjs/platform-express": "^11.1.6",
+    "@nestjs/swagger": "^11.2.0",
+    "@prisma/client": "latest",
+    "bullmq": "^1.80.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.0",
+    "crawlee": "^3.0.0",
+    "ioredis": "^5.3.2",
+    "playwright": "^1.38.0",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.8.1",
+    "swagger-ui-express": "^4.6.3"
+  },
+  "devDependencies": {
+    "prisma": "latest",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.2"
+  }
+}
