@@ -1,12 +1,26 @@
-﻿FROM node:18-bullseye-slim
+﻿# ✅ Base image includes Playwright + Chromium/Firefox/WebKit preinstalled
+FROM mcr.microsoft.com/playwright:v1.38.0-focal
+
+# Set working directory
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y ca-certificates wget gnupg --no-install-recommends && rm -rf /var/lib/apt/lists/*
-
+# Copy package files first (better cache for Docker builds)
 COPY package*.json ./
-RUN npm ci --production
 
+# Install dependencies
+RUN npm ci --legacy-peer-deps
+
+# Copy the rest of the backend code
 COPY . .
 
+# Generate Prisma client
+RUN npx prisma generate
+
+# Build NestJS app (compiles TypeScript -> dist/)
+RUN npm run build
+
+# Expose the port (must match PORT env var, default 3001)
 EXPOSE 3001
-CMD ["npm", "run", "start"]
+
+# Run migrations automatically before starting (safe for production)
+CMD npx prisma migrate deploy && npm run start

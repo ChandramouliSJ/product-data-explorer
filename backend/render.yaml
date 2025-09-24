@@ -1,12 +1,20 @@
+# Exported from Render on 2025-09-24T14:57:01Z
+version: "1"
 services:
-  - type: web
-    name: product-data-explorer-backend
-    env: node
-    plan: free
-    buildCommand: "npm install --legacy-peer-deps && npx prisma generate && npm run build"
-    startCommand: "npm run start"
-    envVars:
-      - key: DATABASE_URL
-        sync: false  # set this in Render Dashboard
-      - key: NODE_ENV
-        value: production
+- type: web
+  name: product-data-explorer
+  runtime: docker
+  repo: https://github.com/ChandramouliSJ/product-data-explorer
+  plan: free
+  envVars:
+  - key: DATABASE_URL
+    sync: false
+  - key: NODE_ENV
+    sync: false
+  - key: PORT
+    sync: false
+  region: oregon
+  dockerContext: .
+  dockerfilePath: backend/Dockerfile
+  autoDeployTrigger: commit
+  rootDir: ./backend
