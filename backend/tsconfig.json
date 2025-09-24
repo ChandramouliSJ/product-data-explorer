@@ -1,16 +1,15 @@
 ﻿{
   "compilerOptions": {
+    "target": "ES2020",
     "module": "commonjs",
-    "target": "es2019",
-    "lib": ["es2019"],
-    "outDir": "dist",
-    "rootDir": "src",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "sourceMap": true
+    "outDir": "dist",
+    "resolveJsonModule": true
   },
-  "include": ["src", "worker.ts", "prisma"]
+  "include": ["src/**/*"]
 }
