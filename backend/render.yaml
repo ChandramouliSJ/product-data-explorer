@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: product-data-explorer-backend
+    env: node
+    plan: free
+    buildCommand: "npm install --legacy-peer-deps && npx prisma generate && npm run build"
+    startCommand: "npm run start"
+    envVars:
+      - key: DATABASE_URL
+        sync: false  # set this in Render Dashboard
+      - key: NODE_ENV
+        value: production

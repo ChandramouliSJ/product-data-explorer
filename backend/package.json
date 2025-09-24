@@ -3,15 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start:dev": "ts-node-dev --respawn --transpile-only src/main.ts",
-    "build": "tsc -p tsconfig.build.json",
-    "start": "node dist/main.js",
-    "worker": "ts-node-dev --respawn --transpile-only worker.ts",
-    "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev --name init",
-    "prisma:seed": "ts-node prisma/seed.ts",
-    "install:playwright": "npx playwright install --with-deps",
-    "lint": "echo No linter configured"
+  "dev": "nodemon src/index.ts",
+  "build": "tsc",
+  "start": "node dist/index.js"
+}
+
   },
   "dependencies": {
     "@nestjs/common": "^11.1.6",
